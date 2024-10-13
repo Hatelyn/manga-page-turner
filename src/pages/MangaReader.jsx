@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X, Bookmark } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Bookmark, Home } from 'lucide-react';
 
 const mangaPages = {
-  1: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-  2: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-  3: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-  4: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-  5: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-  6: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-  7: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-  8: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-  9: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
-  10: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
+  1: Array(20).fill('/placeholder.svg'),
+  2: Array(20).fill('/placeholder.svg'),
+  3: Array(20).fill('/placeholder.svg'),
+  4: Array(20).fill('/placeholder.svg'),
+  5: Array(20).fill('/placeholder.svg'),
+  6: Array(20).fill('/placeholder.svg'),
+  7: Array(20).fill('/placeholder.svg'),
+  8: Array(20).fill('/placeholder.svg'),
+  9: Array(20).fill('/placeholder.svg'),
+  10: Array(20).fill('/placeholder.svg'),
 };
 
 const MangaReader = () => {
@@ -24,9 +24,9 @@ const MangaReader = () => {
   const pages = mangaPages[id] || [];
 
   useEffect(() => {
-    // Load bookmark status from localStorage
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
     setIsBookmarked(!!bookmarks[id]);
+    setCurrentPage(bookmarks[id] || 0);
   }, [id]);
 
   const nextPage = () => {
@@ -54,6 +54,15 @@ const MangaReader = () => {
     }
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     setIsBookmarked(!isBookmarked);
+
+    // Update user profile
+    const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    userProfile.bookmarks = Object.entries(bookmarks).map(([mangaId, page]) => ({
+      id: parseInt(mangaId),
+      title: `Manga ${mangaId}`,
+      page: page
+    }));
+    localStorage.setItem('userProfile', JSON.stringify(userProfile));
   };
 
   return (
@@ -62,6 +71,11 @@ const MangaReader = () => {
         <Button onClick={exitReader} variant="outline">
           <X className="h-4 w-4 mr-2" /> Exit
         </Button>
+        <Link to="/">
+          <Button variant="outline">
+            <Home className="h-4 w-4 mr-2" /> Home
+          </Button>
+        </Link>
         <Button onClick={toggleBookmark} variant="outline">
           <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
           {isBookmarked ? 'Bookmarked' : 'Bookmark'}

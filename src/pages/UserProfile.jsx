@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Avatar } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const UserProfile = () => {
-  const user = {
+  const [user, setUser] = useState({
     name: 'John Doe',
     avatar: '/placeholder.svg',
     friends: ['Alice', 'Bob', 'Charlie'],
-    bookmarks: [
-      { id: 1, title: 'Naruto' },
-      { id: 3, title: 'Attack on Titan' },
-      { id: 5, title: 'Death Note' },
-    ],
+    bookmarks: [],
     readManga: [
       { id: 1, title: 'Naruto' },
       { id: 2, title: 'One Piece' },
       { id: 4, title: 'My Hero Academia' },
       { id: 6, title: 'Fullmetal Alchemist' },
     ],
-  };
+  });
+
+  useEffect(() => {
+    const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    if (userProfile.bookmarks) {
+      setUser(prevUser => ({ ...prevUser, bookmarks: userProfile.bookmarks }));
+    }
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -48,7 +52,11 @@ const UserProfile = () => {
           <CardContent>
             <ul>
               {user.bookmarks.map((bookmark) => (
-                <li key={bookmark.id}>{bookmark.title}</li>
+                <li key={bookmark.id}>
+                  <Link to={`/manga/${bookmark.id}/read`} className="text-blue-500 hover:underline">
+                    {bookmark.title} (Page {bookmark.page + 1})
+                  </Link>
+                </li>
               ))}
             </ul>
           </CardContent>
