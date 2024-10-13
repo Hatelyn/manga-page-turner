@@ -25,35 +25,35 @@ const UserProfile = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-[#f5e6d3]">
       <div className="flex items-center mb-8">
         <Avatar className="h-24 w-24 mr-4">
           <img src={user.avatar} alt={user.name} className="rounded-full" />
         </Avatar>
-        <h1 className="text-3xl font-bold">{user.name}</h1>
+        <h1 className="text-3xl font-bold text-[#4a3728]">{user.name}</h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
+        <Card className="bg-[#e8d5b5] border-[#8c6d4f]">
           <CardHeader>
-            <CardTitle>Friends</CardTitle>
+            <CardTitle className="text-[#4a3728]">Friends</CardTitle>
           </CardHeader>
           <CardContent>
-            <ul>
+            <ul className="text-[#6b5744]">
               {user.friends.map((friend, index) => (
                 <li key={index}>{friend}</li>
               ))}
             </ul>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-[#e8d5b5] border-[#8c6d4f]">
           <CardHeader>
-            <CardTitle>Bookmarks</CardTitle>
+            <CardTitle className="text-[#4a3728]">Bookmarks</CardTitle>
           </CardHeader>
           <CardContent>
             <ul>
               {user.bookmarks.map((bookmark) => (
                 <li key={bookmark.id}>
-                  <Link to={`/manga/${bookmark.id}/read`} className="text-blue-500 hover:underline">
+                  <Link to={`/manga/${bookmark.id}/read`} className="text-[#8c6d4f] hover:underline">
                     {bookmark.title} (Page {bookmark.page + 1})
                   </Link>
                 </li>
@@ -61,14 +61,18 @@ const UserProfile = () => {
             </ul>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-[#e8d5b5] border-[#8c6d4f]">
           <CardHeader>
-            <CardTitle>Read Manga</CardTitle>
+            <CardTitle className="text-[#4a3728]">Read Manga</CardTitle>
           </CardHeader>
           <CardContent>
             <ul>
               {user.readManga.map((manga) => (
-                <li key={manga.id}>{manga.title}</li>
+                <li key={manga.id}>
+                  <Link to={`/manga/${manga.id}`} className="text-[#8c6d4f] hover:underline">
+                    {manga.title}
+                  </Link>
+                </li>
               ))}
             </ul>
           </CardContent>

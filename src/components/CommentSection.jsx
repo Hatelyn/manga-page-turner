@@ -1,44 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+
+const initialComments = {
+  1: [
+    { id: 1, name: 'Naruto Fan', content: 'Believe it! This manga is amazing!', timestamp: '2023-05-15' },
+    { id: 2, name: 'Sasuke', content: 'Hn. It\'s not bad.', timestamp: '2023-05-16' },
+  ],
+  2: [
+    { id: 1, name: 'Luffy', content: 'I\'m gonna be the Pirate King!', timestamp: '2023-05-14' },
+    { id: 2, name: 'Zoro', content: 'Where am I? I got lost in this manga...', timestamp: '2023-05-15' },
+  ],
+  // ... Add initial comments for other manga IDs
+};
 
 const CommentSection = ({ mangaId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({ name: '', content: '' });
 
+  useEffect(() => {
+    setComments(initialComments[mangaId] || []);
+  }, [mangaId]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newComment.name && newComment.content) {
-      setComments([...comments, { ...newComment, id: Date.now() }]);
+      const currentDate = new Date().toISOString().split('T')[0];
+      setComments([...comments, { ...newComment, id: Date.now(), timestamp: currentDate }]);
       setNewComment({ name: '', content: '' });
     }
   };
 
   return (
-    <div className="mt-12">
-      <h2 className="text-2xl font-bold mb-4">Comments</h2>
+    <div className="mt-12 bg-[#e8d5b5] p-6 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4 text-[#4a3728]">Comments</h2>
       <form onSubmit={handleSubmit} className="mb-8">
         <Input
           type="text"
           placeholder="Your Name"
           value={newComment.name}
           onChange={(e) => setNewComment({ ...newComment, name: e.target.value })}
-          className="mb-2"
+          className="mb-2 bg-[#f5e6d3] text-[#4a3728]"
         />
         <Textarea
           placeholder="Your Comment"
           value={newComment.content}
           onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
-          className="mb-2"
+          className="mb-2 bg-[#f5e6d3] text-[#4a3728]"
         />
-        <Button type="submit">Post Comment</Button>
+        <Button type="submit" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">Post Comment</Button>
       </form>
       <div className="space-y-4">
         {comments.map((comment) => (
-          <div key={comment.id} className="bg-gray-100 p-4 rounded-lg">
-            <h3 className="font-bold">{comment.name}</h3>
-            <p>{comment.content}</p>
+          <div key={comment.id} className="bg-[#f5e6d3] p-4 rounded-lg shadow">
+            <h3 className="font-bold text-[#4a3728]">{comment.name}</h3>
+            <p className="text-[#6b5744]">{comment.content}</p>
+            <p className="text-sm text-[#8c6d4f] mt-2">{comment.timestamp}</p>
           </div>
         ))}
       </div>

@@ -12,10 +12,10 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <BrowserRouter>
-        <div className="min-h-screen flex flex-col">
-          <header className="bg-background border-b">
+        <div className="min-h-screen flex flex-col bg-[#f5e6d3]">
+          <header className="bg-[#8c6d4f] border-b border-[#6b5744]">
             <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-              <Link to="/" className="text-2xl font-bold">Manga Reader</Link>
+              <Link to="/" className="text-2xl font-bold text-[#f5e6d3] hover:text-[#e8d5b5] transition-colors">Manga Reader</Link>
               <UserNav />
             </div>
           </header>
