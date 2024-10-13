@@ -53,8 +53,8 @@ const UserProfile = () => {
             <ul>
               {user.bookmarks.map((bookmark) => (
                 <li key={bookmark.id}>
-                  <Link to={`/manga/${bookmark.id}/read`} className="text-[#8c6d4f] hover:underline">
-                    {bookmark.title} (Page {bookmark.page + 1})
+                  <Link to={`/manga/${bookmark.id}/read?chapter=${bookmark.chapter}`} className="text-[#8c6d4f] hover:underline">
+                    {bookmark.title} (Chapter {bookmark.chapter}, Page {bookmark.page + 1})
                   </Link>
                 </li>
               ))}

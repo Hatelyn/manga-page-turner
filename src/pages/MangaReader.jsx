@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, X, Bookmark } from 'lucide-react';
 
@@ -37,12 +37,12 @@ const MangaReader = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const pages = mangaPages[id] || [];
   const mangaTitle = mangaTitles[id] || 'Unknown Manga';
-  const chapter = new URLSearchParams(location.search).get('chapter') || '1';
+  const chapter = parseInt(new URLSearchParams(location.search).get('chapter') || '1');
 
   useEffect(() => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
     setIsBookmarked(!!bookmarks[id]);
-    setCurrentPage(bookmarks[id] || 0);
+    setCurrentPage(bookmarks[id]?.page || 0);
   }, [id]);
 
   const nextPage = () => {
@@ -66,19 +66,24 @@ const MangaReader = () => {
     if (isBookmarked) {
       delete bookmarks[id];
     } else {
-      bookmarks[id] = currentPage;
+      bookmarks[id] = { page: currentPage, chapter };
     }
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     setIsBookmarked(!isBookmarked);
 
     // Update user profile
     const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
-    userProfile.bookmarks = Object.entries(bookmarks).map(([mangaId, page]) => ({
+    userProfile.bookmarks = Object.entries(bookmarks).map(([mangaId, data]) => ({
       id: parseInt(mangaId),
       title: mangaTitles[mangaId] || `Manga ${mangaId}`,
-      page: page
+      page: data.page,
+      chapter: data.chapter
     }));
     localStorage.setItem('userProfile', JSON.stringify(userProfile));
+  };
+
+  const goToChapter = (newChapter) => {
+    navigate(`/manga/${id}/read?chapter=${newChapter}`);
   };
 
   return (
@@ -88,6 +93,14 @@ const MangaReader = () => {
         <Button onClick={exitReader} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <X className="h-4 w-4 mr-2" /> Exit
         </Button>
+        <div>
+          <Button onClick={() => goToChapter(chapter - 1)} disabled={chapter === 1} className="mr-2 bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+            Previous Chapter
+          </Button>
+          <Button onClick={() => goToChapter(chapter + 1)} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+            Next Chapter
+          </Button>
+        </div>
         <Button onClick={toggleBookmark} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
           {isBookmarked ? 'Bookmarked' : 'Bookmark'}

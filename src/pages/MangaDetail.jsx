@@ -36,7 +36,51 @@ const volumesData = {
     { volume: 2, chapters: [8, 9, 10, 11, 12, 13, 14] },
     { volume: 3, chapters: [15, 16, 17, 18, 19, 20, 21] },
   ],
-  // ... Add similar data for other manga IDs
+  2: [
+    { volume: 1, chapters: [1, 2, 3, 4, 5] },
+    { volume: 2, chapters: [6, 7, 8, 9, 10] },
+    { volume: 3, chapters: [11, 12, 13, 14, 15] },
+  ],
+  3: [
+    { volume: 1, chapters: [1, 2, 3, 4] },
+    { volume: 2, chapters: [5, 6, 7, 8] },
+    { volume: 3, chapters: [9, 10, 11, 12] },
+  ],
+  4: [
+    { volume: 1, chapters: [1, 2, 3, 4, 5] },
+    { volume: 2, chapters: [6, 7, 8, 9, 10] },
+    { volume: 3, chapters: [11, 12, 13, 14, 15] },
+  ],
+  5: [
+    { volume: 1, chapters: [1, 2, 3, 4, 5] },
+    { volume: 2, chapters: [6, 7, 8, 9, 10] },
+    { volume: 3, chapters: [11, 12, 13, 14, 15] },
+  ],
+  6: [
+    { volume: 1, chapters: [1, 2, 3, 4, 5] },
+    { volume: 2, chapters: [6, 7, 8, 9, 10] },
+    { volume: 3, chapters: [11, 12, 13, 14, 15] },
+  ],
+  7: [
+    { volume: 1, chapters: [1, 2, 3, 4, 5] },
+    { volume: 2, chapters: [6, 7, 8, 9, 10] },
+    { volume: 3, chapters: [11, 12, 13, 14, 15] },
+  ],
+  8: [
+    { volume: 1, chapters: [1, 2, 3, 4, 5] },
+    { volume: 2, chapters: [6, 7, 8, 9, 10] },
+    { volume: 3, chapters: [11, 12, 13, 14, 15] },
+  ],
+  9: [
+    { volume: 1, chapters: [1, 2, 3, 4, 5] },
+    { volume: 2, chapters: [6, 7, 8, 9, 10] },
+    { volume: 3, chapters: [11, 12, 13, 14, 15] },
+  ],
+  10: [
+    { volume: 1, chapters: [1, 2, 3, 4, 5] },
+    { volume: 2, chapters: [6, 7, 8, 9, 10] },
+    { volume: 3, chapters: [11, 12, 13, 14, 15] },
+  ],
 };
 
 const MangaDetail = () => {
