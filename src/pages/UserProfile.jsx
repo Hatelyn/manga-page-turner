@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { mangaData, volumesData } from '../pages/MangaDetail';
 
 const UserProfile = () => {
   const [user, setUser] = useState({
@@ -20,7 +21,20 @@ const UserProfile = () => {
   useEffect(() => {
     const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
     if (userProfile.bookmarks) {
-      setUser(prevUser => ({ ...prevUser, bookmarks: userProfile.bookmarks }));
+      const updatedBookmarks = userProfile.bookmarks.map(bookmark => {
+        const manga = mangaData[bookmark.id];
+        const volumes = volumesData[bookmark.id];
+        if (manga && volumes) {
+          const volume = volumes.find(v => v.chapters.includes(bookmark.chapter));
+          return {
+            ...bookmark,
+            title: manga.title,
+            volumeNumber: volume ? volume.volume : null,
+          };
+        }
+        return bookmark;
+      });
+      setUser(prevUser => ({ ...prevUser, bookmarks: updatedBookmarks }));
     }
   }, []);
 
@@ -54,7 +68,7 @@ const UserProfile = () => {
               {user.bookmarks.map((bookmark) => (
                 <li key={bookmark.id}>
                   <Link to={`/manga/${bookmark.id}/read?chapter=${bookmark.chapter}`} className="text-[#8c6d4f] hover:underline">
-                    {bookmark.title} (Chapter {bookmark.chapter}, Page {bookmark.page + 1})
+                    {bookmark.title} (Volume {bookmark.volumeNumber}, Chapter {bookmark.chapter}, Page {bookmark.page + 1})
                   </Link>
                 </li>
               ))}

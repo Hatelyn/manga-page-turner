@@ -10,7 +10,6 @@ const mangaPages = {
   4: Array(20).fill('/placeholder.svg'),
   5: Array(20).fill('/placeholder.svg'),
   6: Array(20).fill('/placeholder.svg'),
-  7: Array(20).fill('/placeholder.svg'),
   8: Array(20).fill('/placeholder.svg'),
   9: Array(20).fill('/placeholder.svg'),
   10: Array(20).fill('/placeholder.svg'),
@@ -23,7 +22,6 @@ const mangaTitles = {
   4: 'My Hero Academia',
   5: 'Death Note',
   6: 'Fullmetal Alchemist',
-  7: 'Dragon Ball',
   8: 'Bleach',
   9: 'Hunter x Hunter',
   10: 'Demon Slayer',
@@ -43,7 +41,7 @@ const MangaReader = () => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
     setIsBookmarked(!!bookmarks[id]);
     setCurrentPage(bookmarks[id]?.page || 0);
-  }, [id]);
+  }, [id, chapter]);
 
   const nextPage = () => {
     if (currentPage < pages.length - 2) {
@@ -84,6 +82,7 @@ const MangaReader = () => {
 
   const goToChapter = (newChapter) => {
     navigate(`/manga/${id}/read?chapter=${newChapter}`);
+    setCurrentPage(0); // Reset to page 1 (index 0) when changing chapters
   };
 
   return (

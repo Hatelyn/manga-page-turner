@@ -11,20 +11,18 @@ const mangaData = {
   4: { id: 4, title: 'My Hero Academia', description: 'A superhero-loving boy without any powers is determined to enroll in a prestigious hero academy and learn what it really means to be a hero.', image: 'https://m.media-amazon.com/images/M/MV5BNmQzYmE2MGEtZjk4YS00YmVjLWEwZWMtODRkMjc4MTM5N2I3XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg', categories: ['Superhero', 'Action', 'School'], ageRecommendation: '13+' },
   5: { id: 5, title: 'Death Note', description: 'An intelligent high school student goes on a secret crusade to eliminate criminals from the world after discovering a notebook capable of killing anyone whose name is written into it.', image: 'https://m.media-amazon.com/images/M/MV5BNjRiNmNjMmMtN2U2Yi00ODgxLTk3OTMtMmI1MTI1NjYyZTEzXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UX1000_.jpg', categories: ['Thriller', 'Supernatural', 'Psychological'], ageRecommendation: '16+' },
   6: { id: 6, title: 'Fullmetal Alchemist', description: 'Two brothers search for a Philosopher\'s Stone after an attempt to revive their deceased mother goes awry and leaves them in damaged physical forms.', image: 'https://m.media-amazon.com/images/M/MV5BZmEzN2YzOTItMDI5MS00MGU4LWI1NWQtOTg5ZThhNGQwYTEzXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg', categories: ['Adventure', 'Steampunk', 'Dark Fantasy'], ageRecommendation: '14+' },
-  7: { id: 7, title: 'Dragon Ball', description: 'Follow the adventures of Son Goku from childhood to adulthood as he trains in martial arts and explores the world in search of the seven mystical orbs known as the Dragon Balls.', image: 'https://m.media-amazon.com/images/M/MV5BYzI0YjYxY2UtNzRjNi00NTM2LTg4OTYtNjk5YWYyZjNkNDllXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg', categories: ['Action', 'Adventure', 'Comedy'], ageRecommendation: '12+' },
   8: { id: 8, title: 'Bleach', description: 'High school student Ichigo Kurosaki, who has the ability to see ghosts, gains soul reaper powers from Rukia Kuchiki and sets out to save the world from "Hollows".', image: 'https://m.media-amazon.com/images/M/MV5BZjE0YjVjODQtZGY2NS00MDcyLThhMDAtZGQwMTZiOWNmNjRiXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_FMjpg_UX1000_.jpg', categories: ['Supernatural', 'Action', 'Adventure'], ageRecommendation: '14+' },
   9: { id: 9, title: 'Hunter x Hunter', description: 'Gon Freecss aspires to become a Hunter, an exceptional being capable of greatness. With his friends and his potential, he seeks out his father, who left him when he was younger.', image: 'https://m.media-amazon.com/images/M/MV5BZjNmZDhkN2QtNDYyZC00YzJmLTg0ODUtN2FjNjhhMzE3ZmUxXkEyXkFqcGdeQXVyNjc2NjA5MTU@._V1_FMjpg_UX1000_.jpg', categories: ['Adventure', 'Fantasy', 'Martial Arts'], ageRecommendation: '14+' },
   10: { id: 10, title: 'Demon Slayer', description: 'A young man in search of a cure for his sister, who has been turned into a demon, joins the Demon Slayer Corps, a group dedicated to protecting humanity from demons.', image: 'https://m.media-amazon.com/images/M/MV5BZjZjNzI5MDctY2Y4YS00NmM4LTljMmItZTFkOTExNGI3ODRhXkEyXkFqcGdeQXVyNjc3MjQzNTI@._V1_.jpg', categories: ['Action', 'Dark Fantasy', 'Martial Arts'], ageRecommendation: '16+' },
 };
 
 const similarMangaData = {
-  1: [2, 4, 7],
-  2: [1, 7, 8],
+  1: [2, 4, 8],
+  2: [1, 8, 9],
   3: [5, 9, 10],
   4: [1, 6, 9],
   5: [3, 8, 10],
-  6: [4, 7, 9],
-  7: [1, 2, 6],
+  6: [4, 8, 9],
   8: [2, 5, 10],
   9: [3, 4, 6],
   10: [3, 5, 8],
@@ -57,11 +55,6 @@ const volumesData = {
     { volume: 3, chapters: [11, 12, 13, 14, 15] },
   ],
   6: [
-    { volume: 1, chapters: [1, 2, 3, 4, 5] },
-    { volume: 2, chapters: [6, 7, 8, 9, 10] },
-    { volume: 3, chapters: [11, 12, 13, 14, 15] },
-  ],
-  7: [
     { volume: 1, chapters: [1, 2, 3, 4, 5] },
     { volume: 2, chapters: [6, 7, 8, 9, 10] },
     { volume: 3, chapters: [11, 12, 13, 14, 15] },
