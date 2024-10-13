@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, X, Bookmark } from 'lucide-react';
+import { mangaData, volumesData } from './MangaDetail';
 
 const mangaPages = {
   1: Array(20).fill('/placeholder.svg'),
@@ -34,13 +35,14 @@ const MangaReader = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const pages = mangaPages[id] || [];
-  const mangaTitle = mangaTitles[id] || 'Unknown Manga';
+  const manga = mangaData[id] || { title: 'Unknown Manga' };
+  const volumes = volumesData[id] || [];
   const chapter = parseInt(new URLSearchParams(location.search).get('chapter') || '1');
 
   useEffect(() => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
     setIsBookmarked(!!bookmarks[id]);
-    setCurrentPage(bookmarks[id]?.page || 0);
+    setCurrentPage(0); // Reset to first page when changing chapters
   }, [id, chapter]);
 
   const nextPage = () => {
@@ -73,7 +75,7 @@ const MangaReader = () => {
     const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
     userProfile.bookmarks = Object.entries(bookmarks).map(([mangaId, data]) => ({
       id: parseInt(mangaId),
-      title: mangaTitles[mangaId] || `Manga ${mangaId}`,
+      title: mangaData[mangaId]?.title || `Manga ${mangaId}`,
       page: data.page,
       chapter: data.chapter
     }));
@@ -82,12 +84,15 @@ const MangaReader = () => {
 
   const goToChapter = (newChapter) => {
     navigate(`/manga/${id}/read?chapter=${newChapter}`);
-    setCurrentPage(0); // Reset to page 1 (index 0) when changing chapters
   };
+
+  const currentVolume = volumes.find(volume => volume.chapters.includes(chapter));
+  const lastChapter = Math.max(...volumes.flatMap(volume => volume.chapters));
+  const isLastChapter = chapter === lastChapter;
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4 text-center text-[#4a3728]">{mangaTitle} - Chapter {chapter}</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center text-[#4a3728]">{manga.title} - Volume {currentVolume?.volume || '?'}, Chapter {chapter}</h1>
       <div className="flex justify-between items-center mb-4">
         <Button onClick={exitReader} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <X className="h-4 w-4 mr-2" /> Exit
@@ -96,7 +101,7 @@ const MangaReader = () => {
           <Button onClick={() => goToChapter(chapter - 1)} disabled={chapter === 1} className="mr-2 bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
             Previous Chapter
           </Button>
-          <Button onClick={() => goToChapter(chapter + 1)} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+          <Button onClick={() => goToChapter(chapter + 1)} disabled={isLastChapter} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
             Next Chapter
           </Button>
         </div>

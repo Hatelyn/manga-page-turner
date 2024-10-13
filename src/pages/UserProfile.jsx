@@ -23,14 +23,18 @@ const UserProfile = () => {
     if (userProfile.bookmarks) {
       const updatedBookmarks = userProfile.bookmarks.map(bookmark => {
         const manga = mangaData[bookmark.id];
-        const volumes = volumesData[bookmark.id];
-        if (manga && volumes) {
-          const volume = volumes.find(v => v.chapters.includes(bookmark.chapter));
-          return {
-            ...bookmark,
-            title: manga.title,
-            volumeNumber: volume ? volume.volume : null,
-          };
+        if (manga) {
+          const volumes = volumesData[bookmark.id];
+          if (volumes) {
+            const volume = volumes.find(v => v.chapters.includes(bookmark.chapter));
+            if (volume) {
+              return {
+                ...bookmark,
+                title: manga.title,
+                volumeNumber: volume.volume,
+              };
+            }
+          }
         }
         return bookmark;
       });
@@ -68,7 +72,7 @@ const UserProfile = () => {
               {user.bookmarks.map((bookmark) => (
                 <li key={bookmark.id}>
                   <Link to={`/manga/${bookmark.id}/read?chapter=${bookmark.chapter}`} className="text-[#8c6d4f] hover:underline">
-                    {bookmark.title} (Volume {bookmark.volumeNumber}, Chapter {bookmark.chapter}, Page {bookmark.page + 1})
+                    {bookmark.title} (Volume {bookmark.volumeNumber}, Chapter {bookmark.chapter})
                   </Link>
                 </li>
               ))}
