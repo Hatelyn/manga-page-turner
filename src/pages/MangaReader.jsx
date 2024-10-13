@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Bookmark } from 'lucide-react';
 
 const mangaPages = {
   1: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
@@ -10,12 +10,24 @@ const mangaPages = {
   4: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
   5: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
   6: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
+  7: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
+  8: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
+  9: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
+  10: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
 };
 
 const MangaReader = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const pages = mangaPages[id] || [];
+
+  useEffect(() => {
+    // Load bookmark status from localStorage
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
+    setIsBookmarked(!!bookmarks[id]);
+  }, [id]);
 
   const nextPage = () => {
     if (currentPage < pages.length - 2) {
@@ -29,8 +41,32 @@ const MangaReader = () => {
     }
   };
 
+  const exitReader = () => {
+    navigate(`/manga/${id}`);
+  };
+
+  const toggleBookmark = () => {
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
+    if (isBookmarked) {
+      delete bookmarks[id];
+    } else {
+      bookmarks[id] = currentPage;
+    }
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    setIsBookmarked(!isBookmarked);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-4">
+        <Button onClick={exitReader} variant="outline">
+          <X className="h-4 w-4 mr-2" /> Exit
+        </Button>
+        <Button onClick={toggleBookmark} variant="outline">
+          <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
+          {isBookmarked ? 'Bookmarked' : 'Bookmark'}
+        </Button>
+      </div>
       <div className="flex justify-center items-center gap-4">
         <Button onClick={prevPage} disabled={currentPage === 0}>
           <ChevronLeft className="h-4 w-4" />

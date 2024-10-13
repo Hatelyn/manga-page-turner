@@ -1,15 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import MangaCard from '../components/MangaCard';
-
-const mangaList = [
-  { id: 1, title: 'Naruto', image: '/placeholder.svg' },
-  { id: 2, title: 'One Piece', image: '/placeholder.svg' },
-  { id: 3, title: 'Attack on Titan', image: '/placeholder.svg' },
-  { id: 4, title: 'My Hero Academia', image: '/placeholder.svg' },
-  { id: 5, title: 'Death Note', image: '/placeholder.svg' },
-  { id: 6, title: 'Fullmetal Alchemist', image: '/placeholder.svg' },
-];
+import { mangaList } from '../nav-items';
 
 const Index = () => {
   return (
