@@ -1,10 +1,10 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import { Home } from 'lucide-react';
 import CommentSection from '../components/CommentSection';
 
-const mangaData = {
+export const mangaData = {
   1: { id: 1, title: 'Naruto', description: 'A young ninja with a sealed demon inside him wishes to become the leader of his home village.', image: 'https://m.media-amazon.com/images/I/71QYLrc-IQL._AC_UF1000,1000_QL80_.jpg', categories: ['Action', 'Adventure', 'Fantasy'], ageRecommendation: '13+' },
   2: { id: 2, title: 'One Piece', description: 'Follows the adventures of Monkey D. Luffy and his pirate crew in order to find the greatest treasure ever left by the legendary Pirate, Gold Roger.', image: 'https://m.media-amazon.com/images/M/MV5BODcwNWE3OTMtMDc3MS00NDFjLWE1OTAtNDU3NjgxODMxY2UyXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg', categories: ['Action', 'Adventure', 'Comedy'], ageRecommendation: '13+' },
   3: { id: 3, title: 'Attack on Titan', description: 'In a world where humanity lives inside cities surrounded by enormous walls due to the Titans, gigantic humanoid creatures who devour humans seemingly without reason.', image: 'https://flxt.tmsimg.com/assets/p10701949_b_v8_ah.jpg', categories: ['Action', 'Dark Fantasy', 'Post-apocalyptic'], ageRecommendation: '16+' },
@@ -28,7 +28,7 @@ const similarMangaData = {
   10: [3, 5, 8],
 };
 
-const volumesData = {
+export const volumesData = {
   1: [
     { volume: 1, chapters: [1, 2, 3, 4, 5, 6, 7] },
     { volume: 2, chapters: [8, 9, 10, 11, 12, 13, 14] },
