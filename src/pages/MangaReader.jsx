@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, X, Bookmark } from 'lucide-react';
 
@@ -32,10 +32,12 @@ const mangaTitles = {
 const MangaReader = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentPage, setCurrentPage] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const pages = mangaPages[id] || [];
   const mangaTitle = mangaTitles[id] || 'Unknown Manga';
+  const chapter = new URLSearchParams(location.search).get('chapter') || '1';
 
   useEffect(() => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
@@ -81,29 +83,29 @@ const MangaReader = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4 text-center">{mangaTitle}</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center text-[#4a3728]">{mangaTitle} - Chapter {chapter}</h1>
       <div className="flex justify-between items-center mb-4">
-        <Button onClick={exitReader} variant="outline">
+        <Button onClick={exitReader} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <X className="h-4 w-4 mr-2" /> Exit
         </Button>
-        <Button onClick={toggleBookmark} variant="outline">
+        <Button onClick={toggleBookmark} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
           {isBookmarked ? 'Bookmarked' : 'Bookmark'}
         </Button>
       </div>
       <div className="flex justify-center items-center gap-4">
-        <Button onClick={prevPage} disabled={currentPage === 0}>
+        <Button onClick={prevPage} disabled={currentPage === 0} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <ChevronLeft className="h-4 w-4" />
         </Button>
         <div className="flex gap-2">
           <img src={pages[currentPage]} alt={`Page ${currentPage + 1}`} className="w-1/2 h-[70vh] object-contain" />
           <img src={pages[currentPage + 1]} alt={`Page ${currentPage + 2}`} className="w-1/2 h-[70vh] object-contain" />
         </div>
-        <Button onClick={nextPage} disabled={currentPage >= pages.length - 2}>
+        <Button onClick={nextPage} disabled={currentPage >= pages.length - 2} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <ChevronRight className="h-4 w-4" />
         </Button>
       </div>
-      <div className="text-center mt-4">
+      <div className="text-center mt-4 text-[#4a3728]">
         Page {currentPage + 1}-{currentPage + 2} of {pages.length}
       </div>
     </div>
