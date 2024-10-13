@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X, Bookmark, Home } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Bookmark } from 'lucide-react';
 
 const mangaPages = {
   1: Array(20).fill('/placeholder.svg'),
@@ -16,12 +16,26 @@ const mangaPages = {
   10: Array(20).fill('/placeholder.svg'),
 };
 
+const mangaTitles = {
+  1: 'Naruto',
+  2: 'One Piece',
+  3: 'Attack on Titan',
+  4: 'My Hero Academia',
+  5: 'Death Note',
+  6: 'Fullmetal Alchemist',
+  7: 'Dragon Ball',
+  8: 'Bleach',
+  9: 'Hunter x Hunter',
+  10: 'Demon Slayer',
+};
+
 const MangaReader = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const pages = mangaPages[id] || [];
+  const mangaTitle = mangaTitles[id] || 'Unknown Manga';
 
   useEffect(() => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
@@ -59,7 +73,7 @@ const MangaReader = () => {
     const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
     userProfile.bookmarks = Object.entries(bookmarks).map(([mangaId, page]) => ({
       id: parseInt(mangaId),
-      title: `Manga ${mangaId}`,
+      title: mangaTitles[mangaId] || `Manga ${mangaId}`,
       page: page
     }));
     localStorage.setItem('userProfile', JSON.stringify(userProfile));
@@ -67,15 +81,11 @@ const MangaReader = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-4 text-center">{mangaTitle}</h1>
       <div className="flex justify-between items-center mb-4">
         <Button onClick={exitReader} variant="outline">
           <X className="h-4 w-4 mr-2" /> Exit
         </Button>
-        <Link to="/">
-          <Button variant="outline">
-            <Home className="h-4 w-4 mr-2" /> Home
-          </Button>
-        </Link>
         <Button onClick={toggleBookmark} variant="outline">
           <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
           {isBookmarked ? 'Bookmarked' : 'Bookmark'}
