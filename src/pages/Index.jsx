@@ -1,11 +1,26 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React from 'react';
+import { Link } from 'react-router-dom';
+import MangaCard from '../components/MangaCard';
+
+const mangaList = [
+  { id: 1, title: 'Naruto', image: '/placeholder.svg' },
+  { id: 2, title: 'One Piece', image: '/placeholder.svg' },
+  { id: 3, title: 'Attack on Titan', image: '/placeholder.svg' },
+  { id: 4, title: 'My Hero Academia', image: '/placeholder.svg' },
+  { id: 5, title: 'Death Note', image: '/placeholder.svg' },
+  { id: 6, title: 'Fullmetal Alchemist', image: '/placeholder.svg' },
+];
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-8 text-center">Popular Manga</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {mangaList.map((manga) => (
+          <Link key={manga.id} to={`/manga/${manga.id}`}>
+            <MangaCard title={manga.title} image={manga.image} />
+          </Link>
+        ))}
       </div>
     </div>
   );
