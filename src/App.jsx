@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { navItems } from "./nav-items";
 import UserNav from "./components/UserNav";
+import MangaReader from "./pages/MangaReader";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
               {navItems.map(({ to, page }) => (
                 <Route key={to} path={to} element={page} />
               ))}
+              <Route path="/manga/:id/read/:slug" element={<MangaReader />} />
             </Routes>
           </main>
         </div>

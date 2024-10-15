@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, X, Bookmark } from 'lucide-react';
 import { mangaData, volumesData } from './MangaDetail';
 
@@ -29,7 +29,7 @@ const mangaTitles = {
 };
 
 const MangaReader = () => {
-  const { id } = useParams();
+  const { id, slug } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(0);
@@ -37,23 +37,27 @@ const MangaReader = () => {
   const pages = mangaPages[id] || [];
   const manga = mangaData[id] || { title: 'Unknown Manga' };
   const volumes = volumesData[id] || [];
-  const chapter = parseInt(new URLSearchParams(location.search).get('chapter') || '1');
+  
+  // Parse the slug to get chapter and page
+  const [chapter, page] = slug ? slug.split('-').map(Number) : [1, 0];
 
   useEffect(() => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
     setIsBookmarked(!!bookmarks[id]);
-    setCurrentPage(0); // Reset to first page when changing chapters
-  }, [id, chapter]);
+    setCurrentPage(page);
+  }, [id, chapter, page]);
 
   const nextPage = () => {
     if (currentPage < pages.length - 2) {
-      setCurrentPage(currentPage + 2);
+      const newPage = currentPage + 2;
+      navigate(`/manga/${id}/read/${chapter}-${newPage}`);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 0) {
-      setCurrentPage(currentPage - 2);
+      const newPage = currentPage - 2;
+      navigate(`/manga/${id}/read/${chapter}-${newPage}`);
     }
   };
 
@@ -66,7 +70,8 @@ const MangaReader = () => {
     if (isBookmarked) {
       delete bookmarks[id];
     } else {
-      bookmarks[id] = { page: currentPage, chapter, volume: currentVolume?.volume };
+      const currentVolume = volumes.find(volume => volume.chapters.includes(chapter)) || { volume: 1 };
+      bookmarks[id] = { page: currentPage, chapter, volume: currentVolume.volume, slug: `${chapter}-${currentPage}` };
     }
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     setIsBookmarked(!isBookmarked);
@@ -78,13 +83,14 @@ const MangaReader = () => {
       title: mangaData[mangaId]?.title || `Manga ${mangaId}`,
       page: data.page,
       chapter: data.chapter,
-      volume: data.volume
+      volume: data.volume,
+      slug: data.slug
     }));
     localStorage.setItem('userProfile', JSON.stringify(userProfile));
   };
 
   const goToChapter = (newChapter) => {
-    navigate(`/manga/${id}/read?chapter=${newChapter}`);
+    navigate(`/manga/${id}/read/${newChapter}-0`);
   };
 
   const currentVolume = volumes.find(volume => volume.chapters.includes(chapter));

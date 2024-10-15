@@ -9,11 +9,7 @@ const UserProfile = () => {
     name: 'John Doe',
     avatar: '/placeholder.svg',
     friends: ['Alice', 'Bob', 'Charlie'],
-    bookmarks: [
-      { id: 1, title: 'Naruto', volume: 2, chapter: 10, page: 5 },
-      { id: 2, title: 'One Piece', volume: 3, chapter: 25, page: 12 },
-      { id: 4, title: 'My Hero Academia', volume: 1, chapter: 5, page: 8 },
-    ],
+    bookmarks: [],
     readManga: [
       { id: 1, title: 'Naruto' },
       { id: 2, title: 'One Piece' },
@@ -25,20 +21,7 @@ const UserProfile = () => {
   useEffect(() => {
     const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
     if (userProfile.bookmarks) {
-      const updatedBookmarks = userProfile.bookmarks.map(bookmark => {
-        const manga = mangaData[bookmark.id];
-        const volumes = volumesData[bookmark.id] || [];
-        if (manga) {
-          const volume = volumes.find(v => v.chapters.includes(bookmark.chapter)) || { volume: 1 };
-          return {
-            ...bookmark,
-            title: manga.title,
-            volume: volume.volume,
-          };
-        }
-        return bookmark;
-      });
-      setUser(prevUser => ({ ...prevUser, bookmarks: updatedBookmarks }));
+      setUser(prevUser => ({ ...prevUser, bookmarks: userProfile.bookmarks }));
     }
   }, []);
 
@@ -72,7 +55,7 @@ const UserProfile = () => {
               {user.bookmarks.map((bookmark) => (
                 <li key={bookmark.id}>
                   <Link 
-                    to={`/manga/${bookmark.id}/read?chapter=${bookmark.chapter}&page=${bookmark.page}`} 
+                    to={`/manga/${bookmark.id}/read/${bookmark.slug}`} 
                     className="text-[#8c6d4f] hover:underline"
                   >
                     {bookmark.title} (Volume {bookmark.volume}, Chapter {bookmark.chapter}, Page {bookmark.page + 1})
