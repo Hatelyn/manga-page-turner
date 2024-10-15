@@ -66,7 +66,7 @@ const MangaReader = () => {
     if (isBookmarked) {
       delete bookmarks[id];
     } else {
-      bookmarks[id] = { page: currentPage, chapter };
+      bookmarks[id] = { page: currentPage, chapter, volume: currentVolume?.volume };
     }
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     setIsBookmarked(!isBookmarked);
@@ -77,7 +77,8 @@ const MangaReader = () => {
       id: parseInt(mangaId),
       title: mangaData[mangaId]?.title || `Manga ${mangaId}`,
       page: data.page,
-      chapter: data.chapter
+      chapter: data.chapter,
+      volume: data.volume
     }));
     localStorage.setItem('userProfile', JSON.stringify(userProfile));
   };
