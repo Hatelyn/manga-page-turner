@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { mangaData, volumesData } from '../pages/MangaDetail';
+import { mangaData } from '../pages/MangaDetail';
 
 const UserProfile = () => {
   const [user, setUser] = useState({
@@ -56,22 +56,22 @@ const UserProfile = () => {
             </ul>
           </CardContent>
         </Card>
-      <Card className="bg-[#e8d5b5] border-[#8c6d4f]">
-        <CardHeader>
-          <CardTitle className="text-[#4a3728]">Bookmarks</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul>
-            {user.bookmarks.map((bookmark) => (
-              <li key={bookmark.id}>
-                <Link to={`/manga/${bookmark.id}/read?chapter=${bookmark.chapter}&page=${bookmark.page}`} className="text-[#8c6d4f] hover:underline">
-                  {bookmark.title} (Volume {bookmark.volume}, Chapter {bookmark.chapter}, Page {bookmark.page + 1})
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
+        <Card className="bg-[#e8d5b5] border-[#8c6d4f]">
+          <CardHeader>
+            <CardTitle className="text-[#4a3728]">Bookmarks</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul>
+              {user.bookmarks.map((bookmark) => (
+                <li key={bookmark.id}>
+                  <Link to={`/manga/${bookmark.id}/read?chapter=${bookmark.chapter}&page=${bookmark.page}`} className="text-[#8c6d4f] hover:underline">
+                    {bookmark.title} (Volume {bookmark.volume}, Chapter {bookmark.chapter}, Page {bookmark.page + 1})
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
         <Card className="bg-[#e8d5b5] border-[#8c6d4f]">
           <CardHeader>
             <CardTitle className="text-[#4a3728]">Read Manga</CardTitle>
@@ -88,6 +88,7 @@ const UserProfile = () => {
             </ul>
           </CardContent>
         </Card>
+      </div>
     </div>
   );
 };
