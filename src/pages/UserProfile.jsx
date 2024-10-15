@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { mangaData } from '../pages/MangaDetail';
+import { mangaData, volumesData } from '../pages/MangaDetail';
 
 const UserProfile = () => {
   const [user, setUser] = useState({
@@ -23,10 +23,13 @@ const UserProfile = () => {
     if (userProfile.bookmarks) {
       const updatedBookmarks = userProfile.bookmarks.map(bookmark => {
         const manga = mangaData[bookmark.id];
+        const volumes = volumesData[bookmark.id] || [];
         if (manga) {
+          const volume = volumes.find(v => v.chapters.includes(bookmark.chapter)) || { volume: 1 };
           return {
             ...bookmark,
             title: manga.title,
+            volume: volume.volume,
           };
         }
         return bookmark;
@@ -64,7 +67,10 @@ const UserProfile = () => {
             <ul>
               {user.bookmarks.map((bookmark) => (
                 <li key={bookmark.id}>
-                  <Link to={`/manga/${bookmark.id}/read?chapter=${bookmark.chapter}&page=${bookmark.page}`} className="text-[#8c6d4f] hover:underline">
+                  <Link 
+                    to={`/manga/${bookmark.id}/read?chapter=${bookmark.chapter}&page=${bookmark.page}`} 
+                    className="text-[#8c6d4f] hover:underline"
+                  >
                     {bookmark.title} (Volume {bookmark.volume}, Chapter {bookmark.chapter}, Page {bookmark.page + 1})
                   </Link>
                 </li>
