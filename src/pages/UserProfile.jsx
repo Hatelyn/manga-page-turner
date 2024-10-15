@@ -9,7 +9,11 @@ const UserProfile = () => {
     name: 'John Doe',
     avatar: '/placeholder.svg',
     friends: ['Alice', 'Bob', 'Charlie'],
-    bookmarks: [],
+    bookmarks: [
+      { id: 1, title: 'Naruto', volume: 2, chapter: 10, page: 5 },
+      { id: 2, title: 'One Piece', volume: 3, chapter: 25, page: 12 },
+      { id: 4, title: 'My Hero Academia', volume: 1, chapter: 5, page: 8 },
+    ],
     readManga: [
       { id: 1, title: 'Naruto' },
       { id: 2, title: 'One Piece' },
