@@ -1,5 +1,5 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Home } from 'lucide-react';
 import CommentSection from '../components/CommentSection';
@@ -82,6 +82,10 @@ const MangaDetail = () => {
   const similarManga = similarMangaData[id].map(similarId => mangaData[similarId]);
   const volumes = volumesData[id] || [];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (!manga) {
     return <div>Manga not found</div>;
   }
@@ -114,7 +118,7 @@ const MangaDetail = () => {
                 </div>
               </div>
               <p className="text-[#4a3728] mb-6">Age Recommendation: <span className="font-semibold">{manga.ageRecommendation}</span></p>
-              <Link to={`/manga/${id}/read/1-0`}>
+              <Link to={`/manga/${id}/read/1-1`}>
                 <Button className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">Read Manga</Button>
               </Link>
             </div>
@@ -126,7 +130,7 @@ const MangaDetail = () => {
                 <h3 className="text-xl font-semibold mb-2 text-[#4a3728]">Volume {volume.volume}</h3>
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
                   {volume.chapters.map((chapter) => (
-                    <Link key={chapter} to={`/manga/${id}/read/${chapter}-0`}>
+                    <Link key={chapter} to={`/manga/${id}/read/${chapter}-1`}>
                       <Button variant="outline" className="w-full bg-[#e8d5b5] text-[#4a3728] hover:bg-[#d1b795]">
                         Chapter {chapter}
                       </Button>
@@ -136,12 +140,12 @@ const MangaDetail = () => {
               </div>
             ))}
             <div className="mt-4 flex justify-between">
-              <Link to={`/manga/${id}/read/1-0`}>
+              <Link to={`/manga/${id}/read/1-1`}>
                 <Button className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
                   Start Reading
                 </Button>
               </Link>
-              <Link to={`/manga/${id}/read/${lastChapter}-0`}>
+              <Link to={`/manga/${id}/read/${lastChapter}-1`}>
                 <Button className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]" disabled={lastChapter === 0}>
                   Latest Chapter
                 </Button>

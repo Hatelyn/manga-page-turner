@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, X, Bookmark } from 'lucide-react';
 import { mangaData, volumesData } from './MangaDetail';
@@ -16,48 +16,36 @@ const mangaPages = {
   10: Array(20).fill('/placeholder.svg'),
 };
 
-const mangaTitles = {
-  1: 'Naruto',
-  2: 'One Piece',
-  3: 'Attack on Titan',
-  4: 'My Hero Academia',
-  5: 'Death Note',
-  6: 'Fullmetal Alchemist',
-  8: 'Bleach',
-  9: 'Hunter x Hunter',
-  10: 'Demon Slayer',
-};
-
 const MangaReader = () => {
   const { id, slug } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  const [currentPage, setCurrentPage] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const pages = mangaPages[id] || [];
   const manga = mangaData[id] || { title: 'Unknown Manga' };
   const volumes = volumesData[id] || [];
   
-  // Parse the slug to get chapter and page
-  const [chapter, page] = slug ? slug.split('-').map(Number) : [1, 0];
+  const [chapter, page] = slug ? slug.split('-').map(Number) : [1, 1];
 
   useEffect(() => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
     setIsBookmarked(!!bookmarks[id]);
-    setCurrentPage(page);
+    window.scrollTo(0, 0);
   }, [id, chapter, page]);
 
   const nextPage = () => {
-    if (currentPage < pages.length - 2) {
-      const newPage = currentPage + 2;
-      navigate(`/manga/${id}/read/${chapter}-${newPage}`);
+    if (page < pages.length) {
+      navigate(`/manga/${id}/read/${chapter}-${page + 1}`);
+    } else if (chapter < Math.max(...volumes.flatMap(v => v.chapters))) {
+      navigate(`/manga/${id}/read/${chapter + 1}-1`);
     }
   };
 
   const prevPage = () => {
-    if (currentPage > 0) {
-      const newPage = currentPage - 2;
-      navigate(`/manga/${id}/read/${chapter}-${newPage}`);
+    if (page > 1) {
+      navigate(`/manga/${id}/read/${chapter}-${page - 1}`);
+    } else if (chapter > 1) {
+      const prevChapterPages = mangaPages[id].length;
+      navigate(`/manga/${id}/read/${chapter - 1}-${prevChapterPages}`);
     }
   };
 
@@ -71,7 +59,7 @@ const MangaReader = () => {
       delete bookmarks[id];
     } else {
       const currentVolume = volumes.find(volume => volume.chapters.includes(chapter)) || { volume: 1 };
-      bookmarks[id] = { page: currentPage, chapter, volume: currentVolume.volume, slug: `${chapter}-${currentPage}` };
+      bookmarks[id] = { page, chapter, volume: currentVolume.volume, slug: `${chapter}-${page}` };
     }
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     setIsBookmarked(!isBookmarked);
@@ -90,11 +78,11 @@ const MangaReader = () => {
   };
 
   const goToChapter = (newChapter) => {
-    navigate(`/manga/${id}/read/${newChapter}-0`);
+    navigate(`/manga/${id}/read/${newChapter}-1`);
   };
 
   const currentVolume = volumes.find(volume => volume.chapters.includes(chapter));
-  const lastChapter = Math.max(...volumes.flatMap(volume => volume.chapters));
+  const lastChapter = Math.max(...volumes.flatMap(v => v.chapters));
   const isLastChapter = chapter === lastChapter;
 
   return (
@@ -104,33 +92,32 @@ const MangaReader = () => {
         <Button onClick={exitReader} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <X className="h-4 w-4 mr-2" /> Exit
         </Button>
-        <div>
-          <Button onClick={() => goToChapter(chapter - 1)} disabled={chapter === 1} className="mr-2 bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
-            Previous Chapter
-          </Button>
-          <Button onClick={() => goToChapter(chapter + 1)} disabled={isLastChapter} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
-            Next Chapter
-          </Button>
-        </div>
         <Button onClick={toggleBookmark} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
           {isBookmarked ? 'Bookmarked' : 'Bookmark'}
         </Button>
       </div>
-      <div className="flex justify-center items-center gap-4">
-        <Button onClick={prevPage} disabled={currentPage === 0} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
-        <div className="flex gap-2">
-          <img src={pages[currentPage]} alt={`Page ${currentPage + 1}`} className="w-1/2 h-[70vh] object-contain" />
-          <img src={pages[currentPage + 1]} alt={`Page ${currentPage + 2}`} className="w-1/2 h-[70vh] object-contain" />
+      <div className="flex flex-col items-center gap-4">
+        <img src={pages[page - 1]} alt={`Page ${page}`} className="w-full max-w-2xl h-auto object-contain" />
+        <div className="flex justify-between w-full max-w-2xl mt-4">
+          <Button onClick={prevPage} disabled={chapter === 1 && page === 1} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+            <ChevronLeft className="h-4 w-4 mr-2" /> Previous
+          </Button>
+          <Button onClick={nextPage} disabled={isLastChapter && page === pages.length} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+            Next <ChevronRight className="h-4 w-4 ml-2" />
+          </Button>
         </div>
-        <Button onClick={nextPage} disabled={currentPage >= pages.length - 2} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
-          <ChevronRight className="h-4 w-4" />
-        </Button>
       </div>
       <div className="text-center mt-4 text-[#4a3728]">
-        Page {currentPage + 1}-{currentPage + 2} of {pages.length}
+        Page {page} of {pages.length}
+      </div>
+      <div className="flex justify-between mt-8">
+        <Button onClick={() => goToChapter(chapter - 1)} disabled={chapter === 1} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+          Previous Chapter
+        </Button>
+        <Button onClick={() => goToChapter(chapter + 1)} disabled={isLastChapter} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+          Next Chapter
+        </Button>
       </div>
     </div>
   );
