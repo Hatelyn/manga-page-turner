@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, X, Bookmark, Biohazard, Skull, Ghost, Flame } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Bookmark, Biohazard, Skull, Ghost } from 'lucide-react';
 import { mangaData, volumesData } from './MangaDetail';
 
 const mangaPages = {
@@ -109,12 +109,8 @@ const MangaReader = () => {
         </Button>
       </div>
       <div className="flex flex-col items-center gap-4">
-        <div className="relative w-full max-w-2xl">
+        <div className="w-full max-w-2xl">
           <img src={pages[page - 1]} alt={`Page ${page}`} className="w-full h-auto object-contain" />
-          <Flame className="absolute top-2 left-2 text-horror-500 opacity-50" />
-          <Ghost className="absolute top-2 right-2 text-horror-500 opacity-50" />
-          <Skull className="absolute bottom-2 left-2 text-horror-500 opacity-50" />
-          <Biohazard className="absolute bottom-2 right-2 text-horror-500 opacity-50" />
         </div>
         <div className="flex justify-between w-full max-w-2xl mt-4">
           <Button onClick={prevPage} disabled={chapter === 1 && page === 1} className="bg-horror-700 text-horror-100 hover:bg-horror-600">
