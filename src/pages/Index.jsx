@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import MangaCard from '../components/MangaCard';
 import { mangaList } from '../nav-items';
-import { Ghost } from 'lucide-react';
+import { Ghost, Skull, Biohazard, Flame } from 'lucide-react';
 
 const Index = () => {
   return (
@@ -12,9 +12,15 @@ const Index = () => {
         Popular Horror Manga
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {mangaList.map((manga) => (
+        {mangaList.map((manga, index) => (
           <Link key={manga.id} to={`/manga/${manga.id}`}>
-            <MangaCard title={manga.title} image={manga.image} />
+            <div className="relative">
+              <MangaCard title={manga.title} image={manga.image} />
+              {index % 4 === 0 && <Skull className="absolute top-2 right-2 text-horror-100" />}
+              {index % 4 === 1 && <Biohazard className="absolute top-2 right-2 text-horror-100" />}
+              {index % 4 === 2 && <Flame className="absolute top-2 right-2 text-horror-100" />}
+              {index % 4 === 3 && <Ghost className="absolute top-2 right-2 text-horror-100" />}
+            </div>
           </Link>
         ))}
       </div>

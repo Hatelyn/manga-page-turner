@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, X, Bookmark, Biohazard } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Bookmark, Biohazard, Skull, Ghost, Flame } from 'lucide-react';
 import { mangaData, volumesData } from './MangaDetail';
 
 const mangaPages = {
@@ -102,14 +102,20 @@ const MangaReader = () => {
       </div>
       <div className="flex flex-col sm:flex-row justify-center items-center gap-2 mb-4">
         <Button onClick={() => goToChapter(chapter - 1)} disabled={chapter === 1} className="bg-horror-700 text-horror-100 hover:bg-horror-600">
-          Previous Chapter
+          <Ghost className="mr-2" /> Previous Chapter
         </Button>
         <Button onClick={() => goToChapter(chapter + 1)} disabled={isLastChapter} className="bg-horror-700 text-horror-100 hover:bg-horror-600">
-          Next Chapter
+          Next Chapter <Skull className="ml-2" />
         </Button>
       </div>
       <div className="flex flex-col items-center gap-4">
-        <img src={pages[page - 1]} alt={`Page ${page}`} className="w-full max-w-2xl h-auto object-contain" />
+        <div className="relative w-full max-w-2xl">
+          <img src={pages[page - 1]} alt={`Page ${page}`} className="w-full h-auto object-contain" />
+          <Flame className="absolute top-2 left-2 text-horror-500 opacity-50" />
+          <Ghost className="absolute top-2 right-2 text-horror-500 opacity-50" />
+          <Skull className="absolute bottom-2 left-2 text-horror-500 opacity-50" />
+          <Biohazard className="absolute bottom-2 right-2 text-horror-500 opacity-50" />
+        </div>
         <div className="flex justify-between w-full max-w-2xl mt-4">
           <Button onClick={prevPage} disabled={chapter === 1 && page === 1} className="bg-horror-700 text-horror-100 hover:bg-horror-600">
             <ChevronLeft className="h-4 w-4 mr-2" /> Previous
