@@ -90,9 +90,6 @@ const MangaDetail = () => {
     return <div>Manga not found</div>;
   }
 
-  const lastVolume = volumes[volumes.length - 1];
-  const lastChapter = lastVolume ? Math.max(...lastVolume.chapters) : 0;
-
   return (
     <div className="container mx-auto px-4 py-8 bg-[#f5e6d3]">
       <div className="flex justify-between items-center mb-8">
@@ -139,18 +136,6 @@ const MangaDetail = () => {
                 </div>
               </div>
             ))}
-            <div className="mt-4 flex justify-between">
-              <Link to={`/manga/${id}/read/1-1`}>
-                <Button className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
-                  Start Reading
-                </Button>
-              </Link>
-              <Link to={`/manga/${id}/read/${lastChapter}-1`}>
-                <Button className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]" disabled={lastChapter === 0}>
-                  Latest Chapter
-                </Button>
-              </Link>
-            </div>
           </div>
           <CommentSection mangaId={id} />
         </div>

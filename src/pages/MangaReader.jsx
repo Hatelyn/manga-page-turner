@@ -88,13 +88,21 @@ const MangaReader = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4 text-center text-[#4a3728]">{manga.title} - Volume {currentVolume?.volume || '?'}, Chapter {chapter}</h1>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-2">
         <Button onClick={exitReader} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <X className="h-4 w-4 mr-2" /> Exit
         </Button>
         <Button onClick={toggleBookmark} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
           <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
           {isBookmarked ? 'Bookmarked' : 'Bookmark'}
+        </Button>
+      </div>
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-2 mb-4">
+        <Button onClick={() => goToChapter(chapter - 1)} disabled={chapter === 1} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+          Previous Chapter
+        </Button>
+        <Button onClick={() => goToChapter(chapter + 1)} disabled={isLastChapter} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+          Next Chapter
         </Button>
       </div>
       <div className="flex flex-col items-center gap-4">
@@ -110,14 +118,6 @@ const MangaReader = () => {
       </div>
       <div className="text-center mt-4 text-[#4a3728]">
         Page {page} of {pages.length}
-      </div>
-      <div className="flex justify-between mt-8">
-        <Button onClick={() => goToChapter(chapter - 1)} disabled={chapter === 1} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
-          Previous Chapter
-        </Button>
-        <Button onClick={() => goToChapter(chapter + 1)} disabled={isLastChapter} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
-          Next Chapter
-        </Button>
       </div>
     </div>
   );

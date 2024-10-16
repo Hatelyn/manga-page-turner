@@ -19,14 +19,10 @@ const UserProfile = () => {
   });
 
   useEffect(() => {
-    // Clear all bookmarks
-    localStorage.setItem('bookmarks', JSON.stringify({}));
-    
     const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
-    userProfile.bookmarks = [];
-    localStorage.setItem('userProfile', JSON.stringify(userProfile));
-    
-    setUser(prevUser => ({ ...prevUser, bookmarks: [] }));
+    if (userProfile.bookmarks) {
+      setUser(prevUser => ({ ...prevUser, bookmarks: userProfile.bookmarks }));
+    }
   }, []);
 
   return (
@@ -55,7 +51,18 @@ const UserProfile = () => {
             <CardTitle className="text-[#4a3728]">Bookmarks</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-[#6b5744]">No bookmarks</p>
+            <ul>
+              {user.bookmarks.map((bookmark) => (
+                <li key={bookmark.id}>
+                  <Link 
+                    to={`/manga/${bookmark.id}/read/${bookmark.slug}`} 
+                    className="text-[#8c6d4f] hover:underline"
+                  >
+                    {bookmark.title} (Volume {bookmark.volume}, Chapter {bookmark.chapter}, Page {bookmark.page})
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </CardContent>
         </Card>
         <Card className="bg-[#e8d5b5] border-[#8c6d4f]">
