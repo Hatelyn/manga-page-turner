@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Home, Bookmark, Flame } from 'lucide-react';
+import { Home } from 'lucide-react';
 import CommentSection from '../components/CommentSection';
 
 export const mangaData = {
@@ -82,19 +82,20 @@ const MangaDetail = () => {
   const similarManga = similarMangaData[id].map(similarId => mangaData[similarId]);
   const volumes = volumesData[id] || [];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (!manga) {
-    return <div className="text-horror-100">Manga not found</div>;
+    return <div>Manga not found</div>;
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-horror-900">
+    <div className="container mx-auto px-4 py-8 bg-[#f5e6d3]">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-horror-100 flex items-center">
-          <Flame className="mr-2" />
-          {manga.title}
-        </h1>
+        <h1 className="text-4xl font-bold text-[#4a3728]">{manga.title}</h1>
         <Link to="/">
-          <Button variant="outline" className="bg-horror-700 text-horror-100 hover:bg-horror-600">
+          <Button variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
             <Home className="h-4 w-4 mr-2" /> Home
           </Button>
         </Link>
@@ -104,27 +105,30 @@ const MangaDetail = () => {
           <div className="flex flex-col md:flex-row gap-8 mb-8">
             <img src={manga.image} alt={manga.title} className="w-full md:w-1/3 h-96 object-cover rounded-lg shadow-lg" />
             <div className="flex-1">
-              <p className="text-lg mb-6 text-horror-200">{manga.description}</p>
+              <p className="text-lg mb-6 text-[#4a3728]">{manga.description}</p>
               <div className="mb-4">
-                <h2 className="text-xl font-semibold mb-2 text-horror-100">Categories:</h2>
+                <h2 className="text-xl font-semibold mb-2 text-[#4a3728]">Categories:</h2>
                 <div className="flex flex-wrap gap-2">
                   {manga.categories.map((category, index) => (
-                    <span key={index} className="bg-horror-700 text-horror-100 px-3 py-1 rounded-full text-sm">{category}</span>
+                    <span key={index} className="bg-[#8c6d4f] text-[#f5e6d3] px-3 py-1 rounded-full text-sm">{category}</span>
                   ))}
                 </div>
               </div>
-              <p className="text-horror-200 mb-6">Age Recommendation: <span className="font-semibold">{manga.ageRecommendation}</span></p>
+              <p className="text-[#4a3728] mb-6">Age Recommendation: <span className="font-semibold">{manga.ageRecommendation}</span></p>
+              <Link to={`/manga/${id}/read/1-1`}>
+                <Button className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">Read Manga</Button>
+              </Link>
             </div>
           </div>
           <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-4 text-horror-100">Volumes and Chapters</h2>
+            <h2 className="text-2xl font-bold mb-4 text-[#4a3728]">Volumes and Chapters</h2>
             {volumes.map((volume) => (
               <div key={volume.volume} className="mb-4">
-                <h3 className="text-xl font-semibold mb-2 text-horror-200">Volume {volume.volume}</h3>
+                <h3 className="text-xl font-semibold mb-2 text-[#4a3728]">Volume {volume.volume}</h3>
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
                   {volume.chapters.map((chapter) => (
-                    <Link key={chapter} to={`/manga/${id}/read/${volume.volume}-${chapter}`}>
-                      <Button variant="outline" className="w-full bg-horror-700 text-horror-100 hover:bg-horror-600">
+                    <Link key={chapter} to={`/manga/${id}/read/${chapter}-1`}>
+                      <Button variant="outline" className="w-full bg-[#e8d5b5] text-[#4a3728] hover:bg-[#d1b795]">
                         Chapter {chapter}
                       </Button>
                     </Link>
@@ -136,15 +140,15 @@ const MangaDetail = () => {
           <CommentSection mangaId={id} />
         </div>
         <aside className="lg:w-1/4">
-          <h2 className="text-2xl font-bold mb-4 text-horror-100">Similar Manga</h2>
+          <h2 className="text-2xl font-bold mb-4 text-[#4a3728]">Similar Manga</h2>
           <div className="space-y-4">
             {similarManga.map((similar) => (
               <Link key={similar.id} to={`/manga/${similar.id}`} className="block">
-                <div className="flex items-center bg-horror-800 p-2 rounded-lg shadow hover:shadow-md transition-shadow">
+                <div className="flex items-center bg-[#e8d5b5] p-2 rounded-lg shadow hover:shadow-md transition-shadow">
                   <img src={similar.image} alt={similar.title} className="w-16 h-24 object-cover rounded mr-4" />
                   <div>
-                    <h3 className="font-semibold text-horror-100">{similar.title}</h3>
-                    <p className="text-sm text-horror-300">{similar.categories.join(', ')}</p>
+                    <h3 className="font-semibold text-[#4a3728]">{similar.title}</h3>
+                    <p className="text-sm text-[#6b5744]">{similar.categories.join(', ')}</p>
                   </div>
                 </div>
               </Link>
