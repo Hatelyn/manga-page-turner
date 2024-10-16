@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, X, Bookmark } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Bookmark, Biohazard } from 'lucide-react';
 import { mangaData, volumesData } from './MangaDetail';
 
 const mangaPages = {
@@ -86,37 +86,40 @@ const MangaReader = () => {
   const isLastChapter = chapter === lastChapter;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4 text-center text-[#4a3728]">{manga.title} - Volume {currentVolume?.volume || '?'}, Chapter {chapter}</h1>
+    <div className="container mx-auto px-4 py-8 bg-horror-900">
+      <h1 className="text-3xl font-bold mb-4 text-center text-horror-100 flex items-center justify-center">
+        <Biohazard className="mr-2" />
+        {manga.title} - Volume {currentVolume?.volume || '?'}, Chapter {chapter}
+      </h1>
       <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-2">
-        <Button onClick={exitReader} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+        <Button onClick={exitReader} variant="outline" className="bg-horror-700 text-horror-100 hover:bg-horror-600">
           <X className="h-4 w-4 mr-2" /> Exit
         </Button>
-        <Button onClick={toggleBookmark} variant="outline" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+        <Button onClick={toggleBookmark} variant="outline" className="bg-horror-700 text-horror-100 hover:bg-horror-600">
           <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
           {isBookmarked ? 'Bookmarked' : 'Bookmark'}
         </Button>
       </div>
       <div className="flex flex-col sm:flex-row justify-center items-center gap-2 mb-4">
-        <Button onClick={() => goToChapter(chapter - 1)} disabled={chapter === 1} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+        <Button onClick={() => goToChapter(chapter - 1)} disabled={chapter === 1} className="bg-horror-700 text-horror-100 hover:bg-horror-600">
           Previous Chapter
         </Button>
-        <Button onClick={() => goToChapter(chapter + 1)} disabled={isLastChapter} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+        <Button onClick={() => goToChapter(chapter + 1)} disabled={isLastChapter} className="bg-horror-700 text-horror-100 hover:bg-horror-600">
           Next Chapter
         </Button>
       </div>
       <div className="flex flex-col items-center gap-4">
         <img src={pages[page - 1]} alt={`Page ${page}`} className="w-full max-w-2xl h-auto object-contain" />
         <div className="flex justify-between w-full max-w-2xl mt-4">
-          <Button onClick={prevPage} disabled={chapter === 1 && page === 1} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+          <Button onClick={prevPage} disabled={chapter === 1 && page === 1} className="bg-horror-700 text-horror-100 hover:bg-horror-600">
             <ChevronLeft className="h-4 w-4 mr-2" /> Previous
           </Button>
-          <Button onClick={nextPage} disabled={isLastChapter && page === pages.length} className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">
+          <Button onClick={nextPage} disabled={isLastChapter && page === pages.length} className="bg-horror-700 text-horror-100 hover:bg-horror-600">
             Next <ChevronRight className="h-4 w-4 ml-2" />
           </Button>
         </div>
       </div>
-      <div className="text-center mt-4 text-[#4a3728]">
+      <div className="text-center mt-4 text-horror-200">
         Page {page} of {pages.length}
       </div>
     </div>
