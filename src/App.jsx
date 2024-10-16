@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { navItems } from "./nav-items";
 import UserNav from "./components/UserNav";
 import MangaReader from "./pages/MangaReader";
+import Jumpscare from "./components/Jumpscare";
 import { Skull } from "lucide-react";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
             </div>
           </footer>
         </div>
+        <Jumpscare />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
