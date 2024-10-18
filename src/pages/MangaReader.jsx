@@ -105,16 +105,24 @@ const MangaReader = () => {
           Next Chapter
         </Button>
       </div>
-      <div className="flex flex-col items-center gap-4">
+      <div className="relative flex justify-center items-center">
+        <Button
+          onClick={prevPage}
+          disabled={chapter === 1 && page === 1}
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-primary/50 text-primary-foreground hover:bg-primary/70"
+          size="icon"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </Button>
         <img src={pages[page - 1]} alt={`Page ${page}`} className="w-full max-w-2xl h-auto object-contain" />
-        <div className="flex justify-between w-full max-w-2xl mt-4">
-          <Button onClick={prevPage} disabled={chapter === 1 && page === 1} className="bg-primary text-primary-foreground hover:bg-primary/90">
-            <ChevronLeft className="h-4 w-4 mr-2" /> Previous
-          </Button>
-          <Button onClick={nextPage} disabled={isLastChapter && page === pages.length} className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Next <ChevronRight className="h-4 w-4 ml-2" />
-          </Button>
-        </div>
+        <Button
+          onClick={nextPage}
+          disabled={isLastChapter && page === pages.length}
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-primary/50 text-primary-foreground hover:bg-primary/70"
+          size="icon"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </Button>
       </div>
       <div className="text-center mt-4 text-foreground">
         Page {page} of {pages.length}
