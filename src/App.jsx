@@ -13,12 +13,17 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <BrowserRouter>
-        <div className="min-h-screen flex flex-col bg-[#f5e6d3]">
-          <header className="bg-[#8c6d4f] border-b border-[#6b5744]">
-            <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-              <Link to="/" className="text-2xl font-bold text-[#f5e6d3] hover:text-[#e8d5b5] transition-colors">Manga Reader</Link>
+        <div className="min-h-screen flex flex-col bg-background text-foreground">
+          <header className="bg-horror-500 border-b border-horror-300 relative overflow-hidden">
+            <div className="container mx-auto px-4 py-2 flex justify-between items-center relative z-10">
+              <Link to="/" className="text-2xl font-bold text-horror-100 hover:text-horror-200 transition-colors">Manga Reader</Link>
               <UserNav />
             </div>
+            <div className="blood-drip"></div>
+            <div className="blood-drip"></div>
+            <div className="blood-drip"></div>
+            <div className="blood-drip"></div>
+            <div className="blood-drip"></div>
           </header>
           <main className="flex-grow">
             <Routes>
