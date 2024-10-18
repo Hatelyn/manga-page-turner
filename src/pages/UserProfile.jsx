@@ -26,29 +26,29 @@ const UserProfile = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-[#f5e6d3]">
+    <div className="container mx-auto px-4 py-8 bg-background">
       <div className="flex items-center mb-8">
         <Avatar className="h-24 w-24 mr-4">
           <img src={user.avatar} alt={user.name} className="rounded-full" />
         </Avatar>
-        <h1 className="text-3xl font-bold text-[#4a3728]">{user.name}</h1>
+        <h1 className="text-3xl font-bold text-primary">{user.name}</h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-[#e8d5b5] border-[#8c6d4f]">
+        <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle className="text-[#4a3728]">Friends</CardTitle>
+            <CardTitle className="text-primary">Friends</CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="text-[#6b5744]">
+            <ul className="text-foreground">
               {user.friends.map((friend, index) => (
                 <li key={index}>{friend}</li>
               ))}
             </ul>
           </CardContent>
         </Card>
-        <Card className="bg-[#e8d5b5] border-[#8c6d4f]">
+        <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle className="text-[#4a3728]">Bookmarks</CardTitle>
+            <CardTitle className="text-primary">Bookmarks</CardTitle>
           </CardHeader>
           <CardContent>
             <ul>
@@ -56,7 +56,7 @@ const UserProfile = () => {
                 <li key={bookmark.id}>
                   <Link 
                     to={`/manga/${bookmark.id}/read/${bookmark.slug}`} 
-                    className="text-[#8c6d4f] hover:underline"
+                    className="text-accent-foreground hover:underline"
                   >
                     {bookmark.title} (Volume {bookmark.volume}, Chapter {bookmark.chapter}, Page {bookmark.page})
                   </Link>
@@ -65,15 +65,15 @@ const UserProfile = () => {
             </ul>
           </CardContent>
         </Card>
-        <Card className="bg-[#e8d5b5] border-[#8c6d4f]">
+        <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle className="text-[#4a3728]">Read Manga</CardTitle>
+            <CardTitle className="text-primary">Read Manga</CardTitle>
           </CardHeader>
           <CardContent>
             <ul>
               {user.readManga.map((manga) => (
                 <li key={manga.id}>
-                  <Link to={`/manga/${manga.id}`} className="text-[#8c6d4f] hover:underline">
+                  <Link to={`/manga/${manga.id}`} className="text-accent-foreground hover:underline">
                     {manga.title}
                   </Link>
                 </li>

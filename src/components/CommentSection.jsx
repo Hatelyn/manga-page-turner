@@ -33,30 +33,30 @@ const CommentSection = ({ mangaId }) => {
   };
 
   return (
-    <div className="mt-12 bg-[#e8d5b5] p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-4 text-[#4a3728]">Comments</h2>
+    <div className="mt-12 bg-card p-6 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4 text-primary">Comments</h2>
       <form onSubmit={handleSubmit} className="mb-8">
         <Input
           type="text"
           placeholder="Your Name"
           value={newComment.name}
           onChange={(e) => setNewComment({ ...newComment, name: e.target.value })}
-          className="mb-2 bg-[#f5e6d3] text-[#4a3728]"
+          className="mb-2 bg-input text-foreground"
         />
         <Textarea
           placeholder="Your Comment"
           value={newComment.content}
           onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
-          className="mb-2 bg-[#f5e6d3] text-[#4a3728]"
+          className="mb-2 bg-input text-foreground"
         />
-        <Button type="submit" className="bg-[#8c6d4f] text-[#f5e6d3] hover:bg-[#6b5744]">Post Comment</Button>
+        <Button type="submit" className="bg-primary text-primary-foreground hover:bg-primary/90">Post Comment</Button>
       </form>
       <div className="space-y-4">
         {comments.map((comment) => (
-          <div key={comment.id} className="bg-[#f5e6d3] p-4 rounded-lg shadow">
-            <h3 className="font-bold text-[#4a3728]">{comment.name}</h3>
-            <p className="text-[#6b5744]">{comment.content}</p>
-            <p className="text-sm text-[#8c6d4f] mt-2">{comment.timestamp}</p>
+          <div key={comment.id} className="bg-secondary p-4 rounded-lg shadow">
+            <h3 className="font-bold text-secondary-foreground">{comment.name}</h3>
+            <p className="text-secondary-foreground">{comment.content}</p>
+            <p className="text-sm text-muted-foreground mt-2">{comment.timestamp}</p>
           </div>
         ))}
       </div>
