@@ -71,9 +71,7 @@ export const volumesData = {
     { volume: 3, chapters: [11, 12, 13, 14, 15] },
   ],
   11: [
-    { volume: 1, chapters: [1, 2, 3, 4, 5] },
-    { volume: 2, chapters: [6, 7, 8, 9, 10] },
-    { volume: 3, chapters: [11, 12, 13, 14, 15] },
+    { volume: 1, chapters: [1] }
   ],
 };
 

@@ -14,6 +14,7 @@ const mangaPages = {
   8: Array(20).fill('/placeholder.svg'),
   9: Array(20).fill('/placeholder.svg'),
   10: Array(20).fill('/placeholder.svg'),
+  11: Array(20).fill('/lionchosis-page.png'),
 };
 
 const MangaReader = () => {
