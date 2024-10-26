@@ -14,18 +14,14 @@ export const mangaData = {
   8: { id: 8, title: 'Bleach', description: 'High school student Ichigo Kurosaki, who has the ability to see ghosts, gains soul reaper powers from Rukia Kuchiki and sets out to save the world from "Hollows".', image: 'https://m.media-amazon.com/images/M/MV5BZjE0YjVjODQtZGY2NS00MDcyLThhMDAtZGQwMTZiOWNmNjRiXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_FMjpg_UX1000_.jpg', categories: ['Supernatural', 'Action', 'Adventure'], ageRecommendation: '14+' },
   9: { id: 9, title: 'Hunter x Hunter', description: 'Gon Freecss aspires to become a Hunter, an exceptional being capable of greatness. With his friends and his potential, he seeks out his father, who left him when he was younger.', image: 'https://m.media-amazon.com/images/M/MV5BZjNmZDhkN2QtNDYyZC00YzJmLTg0ODUtN2FjNjhhMzE3ZmUxXkEyXkFqcGdeQXVyNjc2NjA5MTU@._V1_FMjpg_UX1000_.jpg', categories: ['Adventure', 'Fantasy', 'Martial Arts'], ageRecommendation: '14+' },
   10: { id: 10, title: 'Demon Slayer', description: 'A young man in search of a cure for his sister, who has been turned into a demon, joins the Demon Slayer Corps, a group dedicated to protecting humanity from demons.', image: 'https://m.media-amazon.com/images/M/MV5BZjZjNzI5MDctY2Y4YS00NmM4LTljMmItZTFkOTExNGI3ODRhXkEyXkFqcGdeQXVyNjc3MjQzNTI@._V1_.jpg', categories: ['Action', 'Dark Fantasy', 'Martial Arts'], ageRecommendation: '16+' },
-};
-
-const similarMangaData = {
-  1: [2, 4, 8],
-  2: [1, 8, 9],
-  3: [5, 9, 10],
-  4: [1, 6, 9],
-  5: [3, 8, 10],
-  6: [4, 8, 9],
-  8: [2, 5, 10],
-  9: [3, 4, 6],
-  10: [3, 5, 8],
+  11: { 
+    id: 11, 
+    title: 'Lionchosis', 
+    description: 'An epic tale of adventure and mystery.', 
+    image: '/cover.png', 
+    categories: ['Adventure', 'Fantasy', 'Mystery'], 
+    ageRecommendation: '13+' 
+  },
 };
 
 export const volumesData = {
@@ -74,12 +70,30 @@ export const volumesData = {
     { volume: 2, chapters: [6, 7, 8, 9, 10] },
     { volume: 3, chapters: [11, 12, 13, 14, 15] },
   ],
+  11: [
+    { volume: 1, chapters: [1, 2, 3, 4, 5] },
+    { volume: 2, chapters: [6, 7, 8, 9, 10] },
+    { volume: 3, chapters: [11, 12, 13, 14, 15] },
+  ],
+};
+
+const similarMangaData = {
+  1: [2, 4, 8],
+  2: [1, 8, 9],
+  3: [5, 9, 10],
+  4: [1, 6, 9],
+  5: [3, 8, 10],
+  6: [4, 8, 9],
+  8: [2, 5, 10],
+  9: [3, 4, 6],
+  10: [3, 5, 8],
+  11: [3, 4, 9], // Similar to Attack on Titan, My Hero Academia, and Hunter x Hunter
 };
 
 const MangaDetail = () => {
   const { id } = useParams();
   const manga = mangaData[id];
-  const similarManga = similarMangaData[id].map(similarId => mangaData[similarId]);
+  const similarManga = similarMangaData[id] ? similarMangaData[id].map(similarId => mangaData[similarId]) : [];
   const volumes = volumesData[id] || [];
 
   useEffect(() => {
@@ -87,7 +101,16 @@ const MangaDetail = () => {
   }, []);
 
   if (!manga) {
-    return <div className="text-foreground">Manga not found</div>;
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <h1 className="text-2xl font-bold text-foreground">Manga not found</h1>
+        <Link to="/" className="mt-4 inline-block">
+          <Button variant="outline" className="bg-secondary text-secondary-foreground hover:bg-secondary/80">
+            <Home className="h-4 w-4 mr-2" /> Return Home
+          </Button>
+        </Link>
+      </div>
+    );
   }
 
   return (
