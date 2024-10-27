@@ -4,6 +4,28 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, X, Bookmark } from 'lucide-react';
 import { mangaData, volumesData } from './MangaDetail';
 
+const lionchosis = ['https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page1.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page2.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page3.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page4.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page5.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page6.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page7.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page8.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page9.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page10.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page11.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page12.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page13.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page14.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page15.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page16.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page17.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page18.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page19.png',
+  'https://itstud.hiof.no/~kingamj/lionchosis/chapter1/page20.png',
+]
+
 const mangaPages = {
   1: Array(20).fill('/placeholder.svg'),
   2: Array(20).fill('/placeholder.svg'),
@@ -14,7 +36,7 @@ const mangaPages = {
   8: Array(20).fill('/placeholder.svg'),
   9: Array(20).fill('/placeholder.svg'),
   10: Array(20).fill('/placeholder.svg'),
-  11: Array(20).fill('/lionchosis-page.png'),
+  11: lionchosis,
 };
 
 const MangaReader = () => {
@@ -24,7 +46,7 @@ const MangaReader = () => {
   const pages = mangaPages[id] || [];
   const manga = mangaData[id] || { title: 'Unknown Manga' };
   const volumes = volumesData[id] || [];
-  
+
   const [chapter, page] = slug ? slug.split('-').map(Number) : [1, 1];
 
   useEffect(() => {

@@ -14,13 +14,13 @@ export const mangaData = {
   8: { id: 8, title: 'Bleach', description: 'High school student Ichigo Kurosaki, who has the ability to see ghosts, gains soul reaper powers from Rukia Kuchiki and sets out to save the world from "Hollows".', image: 'https://m.media-amazon.com/images/M/MV5BZjE0YjVjODQtZGY2NS00MDcyLThhMDAtZGQwMTZiOWNmNjRiXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_FMjpg_UX1000_.jpg', categories: ['Supernatural', 'Action', 'Adventure'], ageRecommendation: '14+' },
   9: { id: 9, title: 'Hunter x Hunter', description: 'Gon Freecss aspires to become a Hunter, an exceptional being capable of greatness. With his friends and his potential, he seeks out his father, who left him when he was younger.', image: 'https://m.media-amazon.com/images/M/MV5BZjNmZDhkN2QtNDYyZC00YzJmLTg0ODUtN2FjNjhhMzE3ZmUxXkEyXkFqcGdeQXVyNjc2NjA5MTU@._V1_FMjpg_UX1000_.jpg', categories: ['Adventure', 'Fantasy', 'Martial Arts'], ageRecommendation: '14+' },
   10: { id: 10, title: 'Demon Slayer', description: 'A young man in search of a cure for his sister, who has been turned into a demon, joins the Demon Slayer Corps, a group dedicated to protecting humanity from demons.', image: 'https://m.media-amazon.com/images/M/MV5BZjZjNzI5MDctY2Y4YS00NmM4LTljMmItZTFkOTExNGI3ODRhXkEyXkFqcGdeQXVyNjc3MjQzNTI@._V1_.jpg', categories: ['Action', 'Dark Fantasy', 'Martial Arts'], ageRecommendation: '16+' },
-  11: { 
-    id: 11, 
-    title: 'Lionchosis', 
-    description: 'An epic tale of adventure and mystery.', 
-    image: '/cover.png', 
-    categories: ['Adventure', 'Fantasy', 'Mystery'], 
-    ageRecommendation: '13+' 
+  11: {
+    id: 11,
+    title: 'Lionchosis',
+    description: 'A dark tale about a mysterious disease affecting lions and the scientist trying to find a cure, only to discover something far more sinister.',
+    image: 'https://itstud.hiof.no/~kingamj/lionchosis/cover.png',
+    categories: ['Adventure', 'Fantasy', 'Mystery', 'Horror'],
+    ageRecommendation: '18+'
   },
 };
 
