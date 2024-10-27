@@ -18,17 +18,7 @@ export const navItems = [
     page: <MangaDetail />,
   },
   {
-    title: (
-      <div className="relative">
-        <span>Manga Reader</span>
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 -z-10"
-          style={{
-            backgroundImage: `url('https://cdn.leonardo.ai/users/9b423084-7af3-4c04-82c9-ea794f137d9a/generations/59a01875-b909-48f2-8c01-b07038bff2e3/AlbedoBase_XL_Dripping_down_red_juice_2.jpg')`
-          }}
-        />
-      </div>
-    ),
+    title: "Manga Reader",
     to: "/manga/:id/read",
     icon: <BookOpenIcon className="h-4 w-4" />,
     page: <MangaReader />,
